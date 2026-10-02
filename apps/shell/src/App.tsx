@@ -1,9 +1,45 @@
-import { lazy, Suspense } from 'react'
+import { Component, lazy, Suspense, type ErrorInfo, type ReactNode } from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 const CustomersPage = lazy(() => import('customer/CustomersPage'))
 const OrdersPage = lazy(() => import('orders/OrdersPage'))
+
+type RemoteErrorBoundaryProps = {
+  children: ReactNode
+}
+
+type RemoteErrorBoundaryState = {
+  hasError: boolean
+}
+
+class RemoteErrorBoundary extends Component<RemoteErrorBoundaryProps, RemoteErrorBoundaryState> {
+  state: RemoteErrorBoundaryState = { hasError: false }
+
+  static getDerivedStateFromError(): RemoteErrorBoundaryState {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('Federated page failed to render.', error, info)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <section role="alert" aria-labelledby="remote-error-title">
+          <h2 id="remote-error-title">This section is unavailable</h2>
+          <p>The page could not be loaded. Please try again.</p>
+          <button type="button" onClick={() => window.location.reload()}>
+            Reload page
+          </button>
+        </section>
+      )
+    }
+
+    return this.props.children
+  }
+}
 
 export default function App() {
   return (
@@ -21,8 +57,22 @@ export default function App() {
         <main style={{ flex: 1, padding: 16 }}>
           <Suspense fallback={<div>Loading microsite…</div>}>
             <Routes>
-              <Route path="/customers/*" element={<CustomersPage />} />
-              <Route path="/orders/*" element={<OrdersPage />} />
+              <Route
+                path="/customers/*"
+                element={
+                  <RemoteErrorBoundary>
+                    <CustomersPage />
+                  </RemoteErrorBoundary>
+                }
+              />
+              <Route
+                path="/orders/*"
+                element={
+                  <RemoteErrorBoundary>
+                    <OrdersPage />
+                  </RemoteErrorBoundary>
+                }
+              />
               <Route path="/" element={<div>Welcome to the shell</div>} />
             </Routes>
           </Suspense>
