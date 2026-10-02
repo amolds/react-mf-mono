@@ -9,8 +9,8 @@ export default function OrdersPage() {
         <Link to="/orders/new">New</Link>
       </nav>
       <Routes>
-        <Route path="/orders/list" element={<OrdersList />} />
-        <Route path="/orders/new" element={<NewOrder />} />
+        <Route path="list" element={<OrdersList />} />
+        <Route path="new" element={<NewOrder />} />
         <Route path="*" element={<div>Select an option above.</div>} />
       </Routes>
     </div>

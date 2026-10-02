@@ -9,7 +9,7 @@ export default defineConfig({
       name: 'orders',
       filename: 'remoteEntry.js',
       exposes: {
-        './OrdersPage': './src/OrdersPage.tsx',
+        './OrdersPage': './src/components/OrdersPage.tsx',
       },
       shared: ['react', 'react-dom', 'react-router-dom']
     })

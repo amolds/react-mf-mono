@@ -9,8 +9,8 @@ export default function CustomersPage() {
         <Link to="/customers/new">New</Link>
       </nav>
       <Routes>
-        <Route path="/customers/list" element={<CustomersList />} />
-        <Route path="/customers/new" element={<NewCustomer />} />
+        <Route path="list" element={<CustomersList />} />
+        <Route path="new" element={<NewCustomer />} />
         <Route path="*" element={<div>Select an option above.</div>} />
       </Routes>
     </div>

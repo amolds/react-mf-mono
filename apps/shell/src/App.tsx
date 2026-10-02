@@ -21,8 +21,8 @@ export default function App() {
         <main style={{ flex: 1, padding: 16 }}>
           <Suspense fallback={<div>Loading microsite…</div>}>
             <Routes>
-              <Route path="/customers" element={<CustomersPage />} />
-              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/customers/*" element={<CustomersPage />} />
+              <Route path="/orders/*" element={<OrdersPage />} />
               <Route path="/" element={<div>Welcome to the shell</div>} />
             </Routes>
           </Suspense>

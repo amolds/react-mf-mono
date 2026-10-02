@@ -9,7 +9,7 @@ export default defineConfig({
       name: 'customer',
       filename: 'remoteEntry.js',
       exposes: {
-        './CustomersPage': './src/CustomersPage.tsx',
+        './CustomersPage': './src/components/CustomerPage.tsx',
       },
       shared: ['react', 'react-dom', 'react-router-dom']
     })
